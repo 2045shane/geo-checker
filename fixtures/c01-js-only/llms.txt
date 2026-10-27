@@ -1,0 +1,7 @@
+# Example docs
+
+> Widget handbook for the GEO checker fixture.
+
+## Pages
+
+- [Widget handbook](https://example.com/widget): What a widget is

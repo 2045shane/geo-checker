@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "GEO Checker",
+  "version": "1.0.0",
+  "description": "Can AI crawlers actually read this page? An evidence-based GEO checker. No account, no upsell, nothing leaves your browser.",
+  "permissions": ["activeTab", "scripting"],
+  "action": {
+    "default_title": "GEO Checker",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

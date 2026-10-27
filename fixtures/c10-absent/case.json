@@ -1,0 +1,24 @@
+{
+  "id": "c10-absent",
+  "pageUrl": "https://example.com/widget",
+  "xRobotsTag": null,
+  "expect": {
+    "C01": "pass",
+    "C02": "pass",
+    "C03": "pass",
+    "C04": "pass",
+    "C05": "pass",
+    "C06": "pass",
+    "C07": "pass",
+    "C08": "pass",
+    "C09": "pass",
+    "C10": "pass"
+  },
+  "whyIncludes": {
+    "C10": [
+      "do not need an llms.txt",
+      "never changes the score"
+    ]
+  },
+  "comment": "GEO checker fixture page. Not a product landing page."
+}

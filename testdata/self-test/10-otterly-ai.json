@@ -1,0 +1,100 @@
+{
+  "url": "https://otterly.ai/",
+  "date": "2026-10-27",
+  "checkedAt": "2026-10-27, 10:02:31",
+  "timezone": "Asia/Shanghai",
+  "score": 24,
+  "earnedWeight": 2,
+  "maxWeight": 8.25,
+  "fails": [
+    "C02",
+    "C03",
+    "C04",
+    "C06",
+    "C07",
+    "C08",
+    "C09"
+  ],
+  "checks": [
+    {
+      "id": "C01",
+      "status": "pass",
+      "weight": 1,
+      "earned": 1,
+      "scored": true,
+      "why": "The rendered body text (174 characters) is present in the original HTML body (174 characters), including each H1. Script and style contents were ignored. The one-third length rule and the H1 comparison are this checker’s heuristics on top of Google’s JavaScript SEO guidance."
+    },
+    {
+      "id": "C02",
+      "status": "fail",
+      "weight": 1,
+      "earned": 0,
+      "scored": true,
+      "why": "robots.txt could not be read from this site, so this check cannot show whether AI crawlers are allowed. HTTP status: 202. A missing file (HTTP 404 or 410) would mean crawlers are allowed by default. Any other failure stays a fail."
+    },
+    {
+      "id": "C03",
+      "status": "fail",
+      "weight": 1,
+      "earned": 0,
+      "scored": true,
+      "why": "Found noindex in meta robots and/or X-Robots-Tag (meta robots; X-Robots-Tag). noindex and none keep the page out of an index. nosnippet and max-snippet:0 block excerpts. A positive max-snippet is only a cap."
+    },
+    {
+      "id": "C04",
+      "status": "fail",
+      "weight": 1,
+      "earned": 0,
+      "scored": true,
+      "why": "Fail because meta description is missing or empty; the canonical link is missing or empty. Empty or missing title, meta description, canonical, or lang fails this check. Length alone does not."
+    },
+    {
+      "id": "C05",
+      "status": "pass",
+      "weight": 1,
+      "earned": 1,
+      "scored": true,
+      "why": "There is exactly one H1, and no heading is more than one level deeper than the heading before it. Exactly one H1 is this checker’s rule, not an HTML requirement (the HTML standard allows more than one). Skipped levels fail because W3C WAI heading guidance says not to skip, for example H2 then H4."
+    },
+    {
+      "id": "C06",
+      "status": "fail",
+      "weight": 1,
+      "earned": 0,
+      "scored": true,
+      "why": "no JSON-LD script was found. Google’s Article documentation says there are no required Article properties. This checker’s Article profile still requires headline, datePublished, and author so the block identifies the piece. image is recommended, and a missing image does not fail the check. Save the HTML as UTF-8 and keep the script body as strict JSON (no comments, no trailing commas, no smart quotes)."
+    },
+    {
+      "id": "C07",
+      "status": "fail",
+      "weight": 1,
+      "earned": 0,
+      "scored": true,
+      "why": "JSON-LD has no author name; JSON-LD has no datePublished that resolves to a calendar day; JSON-LD has no dateModified that resolves to a calendar day; the visible page has no author (meta author, rel=author, or itemprop=author); the visible page has no datePublished (itemprop=datePublished or article:published_time); the visible page has no dateModified (itemprop=dateModified or article:modified_time). Author, datePublished, and dateModified must each appear in JSON-LD and in visible markup, and the calendar days and author names must match. Visible dates are read from itemprop or article:published_time / article:modified_time, not from an unmarked time element."
+    },
+    {
+      "id": "C08",
+      "status": "fail",
+      "weight": 0.25,
+      "earned": 0,
+      "scored": true,
+      "why": "Found 0 of 3 extractable-answer signals. This check passes only when at least two are present: a definition-style first paragraph (“X is …”), a heading that ends with a question mark, and a list of at least two items or a table of at least two rows. This check has a low weight (0.25 of 8.25). FAQPage JSON-LD does not add points. No FAQPage block was used. Google’s AI optimization guide says you do not need special markup, and you do not need to rewrite a page just for generative AI. These signals are hints for text extractors, not a citation score."
+    },
+    {
+      "id": "C09",
+      "status": "fail",
+      "weight": 1,
+      "earned": 0,
+      "scored": true,
+      "why": "No authoritative outbound link was found. A link counts when it is http(s), its registrable site differs from this page, and its host is on the v1 authority list (for example wikipedia.org, developer.mozilla.org, developers.google.com, schema.org, w3.org) or ends in a government or education suffix such as .gov, .edu, .gov.uk, or .ac.uk. Same-site links do not count. nofollow links still count because the URL is in the HTML."
+    },
+    {
+      "id": "C10",
+      "status": "pass",
+      "weight": 0,
+      "earned": 0,
+      "scored": false,
+      "why": "No llms.txt content was found at /llms.txt (HTTP 202). That is fine. Google’s AI optimization guide says you do not need an llms.txt file (or other special AI markup) for Google Search, including its generative AI features, and that Google Search ignores it. Keeping a file for some other consumer neither helps nor hurts Google Search. This check never changes the score."
+    }
+  ]
+}

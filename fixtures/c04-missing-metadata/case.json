@@ -1,0 +1,26 @@
+{
+  "id": "c04-missing-metadata",
+  "pageUrl": "https://example.com/widget",
+  "xRobotsTag": null,
+  "expect": {
+    "C01": "pass",
+    "C02": "pass",
+    "C03": "pass",
+    "C04": "fail",
+    "C05": "pass",
+    "C06": "pass",
+    "C07": "pass",
+    "C08": "pass",
+    "C09": "pass",
+    "C10": "pass"
+  },
+  "whyIncludes": {
+    "C04": [
+      "title",
+      "meta description",
+      "canonical",
+      "lang"
+    ]
+  },
+  "comment": "GEO checker fixture page. Not a product landing page."
+}

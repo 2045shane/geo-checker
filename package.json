@@ -1,0 +1,19 @@
+{
+  "name": "geo-checker",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Evidence-based GEO checker Chrome extension. Checks run in the browser.",
+  "scripts": {
+    "test": "node --test",
+    "screenshots": "node scripts/screenshot-popup.mjs",
+    "self-test": "node scripts/self-test-live.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "linkedom": "^0.18.12",
+    "puppeteer-core": "^24.23.0"
+  }
+}

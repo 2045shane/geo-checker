@@ -1,0 +1,99 @@
+{
+  "url": "https://overreacted.io/",
+  "date": "2026-10-27",
+  "checkedAt": "2026-10-27, 10:02:31",
+  "timezone": "Asia/Shanghai",
+  "score": 36,
+  "earnedWeight": 3,
+  "maxWeight": 8.25,
+  "fails": [
+    "C04",
+    "C05",
+    "C06",
+    "C07",
+    "C08",
+    "C09"
+  ],
+  "checks": [
+    {
+      "id": "C01",
+      "status": "pass",
+      "weight": 1,
+      "earned": 1,
+      "scored": true,
+      "why": "The rendered body text (4613 characters) is present in the original HTML body (4627 characters), including each H1. Script and style contents were ignored. The one-third length rule and the H1 comparison are this checker’s heuristics on top of Google’s JavaScript SEO guidance."
+    },
+    {
+      "id": "C02",
+      "status": "pass",
+      "weight": 1,
+      "earned": 1,
+      "scored": true,
+      "why": "robots.txt was read from this origin. Training crawlers blocked: none; allowed: GPTBot, Google-Extended, CCBot, ClaudeBot, Amazonbot, Applebot-Extended, Bytespider, meta-externalagent. Search crawlers blocked: none; allowed: OAI-SearchBot, ChatGPT-User, PerplexityBot, Perplexity-User, Claude-SearchBot, Claude-User. Training opt-out (GPTBot, Google-Extended, CCBot, and the other training tokens) is a different decision from blocking search crawlers (OAI-SearchBot, ChatGPT-User, PerplexityBot, Claude-SearchBot, and the other search tokens). This check fails when any tracked token is disallowed for this path. Perplexity’s documentation says Perplexity-User generally ignores robots.txt because a person requested the fetch; the robots.txt rule is still reported. None of the tracked tokens are disallowed for this path."
+    },
+    {
+      "id": "C03",
+      "status": "pass",
+      "weight": 1,
+      "earned": 1,
+      "scored": true,
+      "why": "No noindex, none, nosnippet, or max-snippet:0 directive was found in meta robots, googlebot, http-equiv X-Robots-Tag, or the page’s X-Robots-Tag header. No max-snippet directive was found."
+    },
+    {
+      "id": "C04",
+      "status": "fail",
+      "weight": 1,
+      "earned": 0,
+      "scored": true,
+      "why": "Fail because the canonical link is missing or empty. Empty or missing title, meta description, canonical, or lang fails this check. Length alone does not."
+    },
+    {
+      "id": "C05",
+      "status": "fail",
+      "weight": 1,
+      "earned": 0,
+      "scored": true,
+      "why": "found 0 H1 elements; this check requires exactly one. Exactly one H1 is this checker’s rule, not an HTML requirement (the HTML standard allows more than one). Skipped levels fail because W3C WAI heading guidance says not to skip, for example H2 then H4."
+    },
+    {
+      "id": "C06",
+      "status": "fail",
+      "weight": 1,
+      "earned": 0,
+      "scored": true,
+      "why": "no JSON-LD script was found. Google’s Article documentation says there are no required Article properties. This checker’s Article profile still requires headline, datePublished, and author so the block identifies the piece. image is recommended, and a missing image does not fail the check. Save the HTML as UTF-8 and keep the script body as strict JSON (no comments, no trailing commas, no smart quotes)."
+    },
+    {
+      "id": "C07",
+      "status": "fail",
+      "weight": 1,
+      "earned": 0,
+      "scored": true,
+      "why": "JSON-LD has no author name; JSON-LD has no datePublished that resolves to a calendar day; JSON-LD has no dateModified that resolves to a calendar day; the visible page has no author (meta author, rel=author, or itemprop=author); the visible page has no datePublished (itemprop=datePublished or article:published_time); the visible page has no dateModified (itemprop=dateModified or article:modified_time). Author, datePublished, and dateModified must each appear in JSON-LD and in visible markup, and the calendar days and author names must match. Visible dates are read from itemprop or article:published_time / article:modified_time, not from an unmarked time element."
+    },
+    {
+      "id": "C08",
+      "status": "fail",
+      "weight": 0.25,
+      "earned": 0,
+      "scored": true,
+      "why": "Found 1 of 3 extractable-answer signals (a question heading (Why Does RSC Integrate with a Bundler?; What Does \"use client\" Do?; What Are the React Team Principles?; What Is JavaScript Made Of?; How Does the Development Mode Work?; How Are Function Components Different from Classes?; Why Isn’t X a Hook?; Why Do React Hooks Rely on Call Order?; How Does setState Know What to Do?; Why Do React Elements Have a $$typeof Property?; How Does React Tell a Class from a Function?; Why Do We Write super(props)?)). This check passes only when at least two are present: a definition-style first paragraph (“X is …”), a heading that ends with a question mark, and a list of at least two items or a table of at least two rows. This check has a low weight (0.25 of 8.25). FAQPage JSON-LD does not add points. No FAQPage block was used. Google’s AI optimization guide says you do not need special markup, and you do not need to rewrite a page just for generative AI. These signals are hints for text extractors, not a citation score."
+    },
+    {
+      "id": "C09",
+      "status": "fail",
+      "weight": 1,
+      "earned": 0,
+      "scored": true,
+      "why": "No authoritative outbound link was found. A link counts when it is http(s), its registrable site differs from this page, and its host is on the v1 authority list (for example wikipedia.org, developer.mozilla.org, developers.google.com, schema.org, w3.org) or ends in a government or education suffix such as .gov, .edu, .gov.uk, or .ac.uk. Same-site links do not count. nofollow links still count because the URL is in the HTML."
+    },
+    {
+      "id": "C10",
+      "status": "pass",
+      "weight": 0,
+      "earned": 0,
+      "scored": false,
+      "why": "llms.txt is present and starts with a Markdown H1. It is shown here and it is not scored. Google’s AI optimization guide says you do not need an llms.txt file (or other special AI markup) for Google Search, including its generative AI features, and that Google Search ignores it. Keeping a file for some other consumer neither helps nor hurts Google Search. This check never changes the score."
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "id": "c06-mojibake",
+  "pageUrl": "https://example.com/widget",
+  "xRobotsTag": null,
+  "expect": {
+    "C01": "pass",
+    "C02": "pass",
+    "C03": "pass",
+    "C04": "pass",
+    "C05": "pass",
+    "C06": "fail",
+    "C07": "pass",
+    "C08": "pass",
+    "C09": "pass",
+    "C10": "pass"
+  },
+  "whyIncludes": {
+    "C06": [
+      "mojibake",
+      "UTF-8"
+    ]
+  },
+  "comment": "GEO checker fixture page. Not a product landing page."
+}
