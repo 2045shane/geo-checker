@@ -1,0 +1,24 @@
+{
+  "id": "c05-skipped-heading",
+  "pageUrl": "https://example.com/widget",
+  "xRobotsTag": null,
+  "expect": {
+    "C01": "pass",
+    "C02": "pass",
+    "C03": "pass",
+    "C04": "pass",
+    "C05": "fail",
+    "C06": "pass",
+    "C07": "pass",
+    "C08": "pass",
+    "C09": "pass",
+    "C10": "pass"
+  },
+  "whyIncludes": {
+    "C05": [
+      "h2 → h4",
+      "Exactly one H1"
+    ]
+  },
+  "comment": "GEO checker fixture page. Not a product landing page."
+}

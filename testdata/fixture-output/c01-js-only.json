@@ -1,0 +1,585 @@
+{
+  "version": 1,
+  "positioning": "Can AI crawlers actually read this page? An evidence-based GEO checker. No account, no upsell, nothing leaves your browser.",
+  "pageUrl": "https://example.com/widget",
+  "checkedAt": "2026-10-27T02:00:00.000Z",
+  "score": 88,
+  "earnedWeight": 7.25,
+  "maxWeight": 8.25,
+  "scoreRule": {
+    "formula": "score = round(100 * earnedWeight / maxWeight)",
+    "maxWeight": 8.25,
+    "weights": {
+      "C01": 1,
+      "C02": 1,
+      "C03": 1,
+      "C04": 1,
+      "C05": 1,
+      "C06": 1,
+      "C07": 1,
+      "C08": 0.25,
+      "C09": 1,
+      "C10": 0
+    },
+    "notes": [
+      "C01, C02, C03, C04, C05, C06, C07, and C09 each have weight 1.",
+      "C08 has weight 0.25 (low weight).",
+      "C10 has weight 0 and never changes the score.",
+      "FAQPage JSON-LD does not add points."
+    ]
+  },
+  "checks": [
+    {
+      "id": "C01",
+      "title": "Raw HTML vs rendered page",
+      "status": "fail",
+      "weight": 1,
+      "earned": 0,
+      "scored": true,
+      "why": "Rendered H1 text is not in the original HTML body: “Widget handbook”. The rendered body has 339 characters and the original HTML body has 0. The original is under one third of the rendered text, which is the v1 signal for content injected by JavaScript. Script and style contents are ignored, so text that exists only inside a JavaScript string does not count as readable HTML. Many AI crawlers fetch the response and do not reliably build the page. Googlebot can render JavaScript later; that is a second wave, not a substitute for text in the first response.",
+      "fix": "<article>\n  <h1>Page title</h1>\n  <p>The main explanation is in the HTML response, not only after JavaScript runs.</p>\n</article>\n",
+      "sources": [
+        {
+          "title": "Google: JavaScript SEO basics",
+          "url": "https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics",
+          "confidence": "official"
+        },
+        {
+          "title": "Google: AI optimization guide (technical structure)",
+          "url": "https://developers.google.com/search/docs/fundamentals/ai-optimization-guide",
+          "confidence": "official"
+        }
+      ],
+      "details": {
+        "renderedLength": 339,
+        "rawLength": 0,
+        "missingH1": [
+          "Widget handbook"
+        ]
+      }
+    },
+    {
+      "id": "C02",
+      "title": "AI crawler allow rules",
+      "status": "pass",
+      "weight": 1,
+      "earned": 1,
+      "scored": true,
+      "why": "robots.txt was read from this origin. Training crawlers blocked: none; allowed: GPTBot, Google-Extended, CCBot, ClaudeBot, Amazonbot, Applebot-Extended, Bytespider, meta-externalagent. Search crawlers blocked: none; allowed: OAI-SearchBot, ChatGPT-User, PerplexityBot, Perplexity-User, Claude-SearchBot, Claude-User. Training opt-out (GPTBot, Google-Extended, CCBot, and the other training tokens) is a different decision from blocking search crawlers (OAI-SearchBot, ChatGPT-User, PerplexityBot, Claude-SearchBot, and the other search tokens). This check fails when any tracked token is disallowed for this path. Perplexity’s documentation says Perplexity-User generally ignores robots.txt because a person requested the fetch; the robots.txt rule is still reported. None of the tracked tokens are disallowed for this path.",
+      "fix": "# Search crawlers fetch pages for AI answers. Allow them if this page should be readable.\nUser-agent: OAI-SearchBot\nAllow: /\n\nUser-agent: ChatGPT-User\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: Claude-SearchBot\nAllow: /\n\nUser-agent: Claude-User\nAllow: /\n\n# Training crawlers are a separate choice. Allowing them opts this site into\n# training crawls. Delete a group to keep that training opt-out.\nUser-agent: GPTBot\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nUser-agent: CCBot\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n",
+      "sources": [
+        {
+          "title": "OpenAI crawlers (GPTBot, OAI-SearchBot, ChatGPT-User)",
+          "url": "https://developers.openai.com/api/docs/bots",
+          "confidence": "official"
+        },
+        {
+          "title": "Google crawlers overview (including Google-Extended)",
+          "url": "https://developers.google.com/crawling/docs/crawlers-fetchers/overview-google-crawlers",
+          "confidence": "official"
+        },
+        {
+          "title": "Common Crawl: CCBot",
+          "url": "https://commoncrawl.org/ccbot",
+          "confidence": "official"
+        },
+        {
+          "title": "Anthropic: ClaudeBot, Claude-User, and Claude-SearchBot",
+          "url": "https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler",
+          "confidence": "official"
+        },
+        {
+          "title": "Perplexity crawlers",
+          "url": "https://docs.perplexity.ai/docs/resources/perplexity-crawlers",
+          "confidence": "official"
+        },
+        {
+          "title": "Cloudflare: managed robots.txt",
+          "url": "https://developers.cloudflare.com/bots/additional-configurations/managed-robots-txt/",
+          "confidence": "official"
+        },
+        {
+          "title": "Google robots.txt specification",
+          "url": "https://developers.google.com/crawling/docs/robots-txt/robots-txt-spec",
+          "confidence": "official"
+        },
+        {
+          "title": "RFC 9309: Robots Exclusion Protocol",
+          "url": "https://www.rfc-editor.org/rfc/rfc9309",
+          "confidence": "official"
+        }
+      ],
+      "details": {
+        "path": "/widget",
+        "robotsStatus": 200,
+        "training": [
+          {
+            "token": "GPTBot",
+            "vendor": "OpenAI",
+            "role": "training",
+            "allowed": true
+          },
+          {
+            "token": "Google-Extended",
+            "vendor": "Google",
+            "role": "training",
+            "allowed": true
+          },
+          {
+            "token": "CCBot",
+            "vendor": "Common Crawl",
+            "role": "training",
+            "allowed": true
+          },
+          {
+            "token": "ClaudeBot",
+            "vendor": "Anthropic",
+            "role": "training",
+            "allowed": true
+          },
+          {
+            "token": "Amazonbot",
+            "vendor": "Amazon",
+            "role": "training",
+            "allowed": true
+          },
+          {
+            "token": "Applebot-Extended",
+            "vendor": "Apple",
+            "role": "training",
+            "allowed": true
+          },
+          {
+            "token": "Bytespider",
+            "vendor": "ByteDance",
+            "role": "training",
+            "allowed": true
+          },
+          {
+            "token": "meta-externalagent",
+            "vendor": "Meta",
+            "role": "training",
+            "allowed": true
+          }
+        ],
+        "search": [
+          {
+            "token": "OAI-SearchBot",
+            "vendor": "OpenAI",
+            "role": "search",
+            "allowed": true
+          },
+          {
+            "token": "ChatGPT-User",
+            "vendor": "OpenAI",
+            "role": "search",
+            "allowed": true
+          },
+          {
+            "token": "PerplexityBot",
+            "vendor": "Perplexity",
+            "role": "search",
+            "allowed": true
+          },
+          {
+            "token": "Perplexity-User",
+            "vendor": "Perplexity",
+            "role": "search",
+            "allowed": true
+          },
+          {
+            "token": "Claude-SearchBot",
+            "vendor": "Anthropic",
+            "role": "search",
+            "allowed": true
+          },
+          {
+            "token": "Claude-User",
+            "vendor": "Anthropic",
+            "role": "search",
+            "allowed": true
+          }
+        ],
+        "cloudflare": {
+          "detected": false,
+          "signals": [],
+          "clusterBlocked": []
+        }
+      }
+    },
+    {
+      "id": "C03",
+      "title": "Index and snippet directives",
+      "status": "pass",
+      "weight": 1,
+      "earned": 1,
+      "scored": true,
+      "why": "No noindex, none, nosnippet, or max-snippet:0 directive was found in meta robots, googlebot, http-equiv X-Robots-Tag, or the page’s X-Robots-Tag header. No max-snippet directive was found.",
+      "fix": "<meta name=\"robots\" content=\"index, follow, max-snippet:-1, max-image-preview:large\">\n\n# If the HTTP response sets a blocking header, remove it:\n# X-Robots-Tag: noindex, nosnippet, max-snippet:0\n",
+      "sources": [
+        {
+          "title": "Google: robots meta tag and X-Robots-Tag",
+          "url": "https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag",
+          "confidence": "official"
+        }
+      ],
+      "details": {
+        "noindex": false,
+        "nosnippet": false,
+        "none": false,
+        "maxSnippet": null,
+        "sources": []
+      }
+    },
+    {
+      "id": "C04",
+      "title": "Title, description, canonical, and language",
+      "status": "pass",
+      "weight": 1,
+      "earned": 1,
+      "scored": true,
+      "why": "The page has a non-empty title, a non-empty meta description, an absolute http(s) canonical URL, and a basic BCP 47 lang value on the html element.",
+      "fix": "<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Specific page title</title>\n  <meta name=\"description\" content=\"One or two sentences that describe this page.\">\n  <link rel=\"canonical\" href=\"https://example.com/this-page\">\n</head>\n",
+      "sources": [
+        {
+          "title": "Google: snippets and meta description",
+          "url": "https://developers.google.com/search/docs/appearance/snippet",
+          "confidence": "official"
+        },
+        {
+          "title": "Google: canonical URLs",
+          "url": "https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls",
+          "confidence": "official"
+        },
+        {
+          "title": "MDN: lang attribute",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/lang",
+          "confidence": "official"
+        }
+      ],
+      "details": {
+        "title": "Widget handbook",
+        "description": "A widget is a reusable page element shipped as HTML.",
+        "canonical": "https://example.com/widget",
+        "lang": "en",
+        "problems": []
+      }
+    },
+    {
+      "id": "C05",
+      "title": "Single H1 and heading order",
+      "status": "pass",
+      "weight": 1,
+      "earned": 1,
+      "scored": true,
+      "why": "There is exactly one H1, and no heading is more than one level deeper than the heading before it. Exactly one H1 is this checker’s rule, not an HTML requirement (the HTML standard allows more than one). Skipped levels fail because W3C WAI heading guidance says not to skip, for example H2 then H4.",
+      "fix": "<h1>Only one top-level heading</h1>\n<h2>Section</h2>\n<h3>Subsection</h3>\n<!-- Do not jump from h2 to h4. -->\n",
+      "sources": [
+        {
+          "title": "W3C WAI: headings",
+          "url": "https://www.w3.org/WAI/tutorials/page-structure/headings/",
+          "confidence": "official"
+        },
+        {
+          "title": "v1 rule: exactly one H1 (the HTML standard allows more than one)",
+          "url": "https://html.spec.whatwg.org/multipage/sections.html#the-h1,-h2,-h3,-h4,-h5,-and-h6-elements",
+          "confidence": "heuristic"
+        }
+      ],
+      "details": {
+        "h1Count": 1,
+        "skips": [],
+        "headings": [
+          {
+            "level": 1,
+            "text": "Widget handbook"
+          },
+          {
+            "level": 2,
+            "text": "What is a widget?"
+          },
+          {
+            "level": 3,
+            "text": "Why this matters"
+          }
+        ]
+      }
+    },
+    {
+      "id": "C06",
+      "title": "JSON-LD structured data",
+      "status": "pass",
+      "weight": 1,
+      "earned": 1,
+      "scored": true,
+      "why": "JSON-LD parsed, and Article matched the v1 field profile. Google’s Article documentation says there are no required Article properties. This checker’s Article profile still requires headline, datePublished, and author so the block identifies the piece. image is recommended, and a missing image does not fail the check.",
+      "fix": "<script type=\"application/ld+json\">\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"Article\",\n  \"headline\": \"Your headline\",\n  \"image\": \"https://example.com/cover.jpg\",\n  \"datePublished\": \"2026-10-27\",\n  \"dateModified\": \"2026-10-27\",\n  \"author\": { \"@type\": \"Person\", \"name\": \"Author Name\" }\n}\n</script>\n",
+      "sources": [
+        {
+          "title": "Google: Article structured data",
+          "url": "https://developers.google.com/search/docs/appearance/structured-data/article",
+          "confidence": "official"
+        },
+        {
+          "title": "Schema.org: Article",
+          "url": "https://schema.org/Article",
+          "confidence": "official"
+        },
+        {
+          "title": "Google: intro to structured data",
+          "url": "https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data",
+          "confidence": "official"
+        },
+        {
+          "title": "MDN: JSON.parse",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse",
+          "confidence": "official"
+        }
+      ],
+      "details": {
+        "parseErrors": [],
+        "mojibake": [],
+        "nodes": [
+          {
+            "types": [
+              "Article"
+            ],
+            "recognized": true,
+            "issues": [],
+            "headline": "Widget handbook",
+            "hasImage": true
+          }
+        ],
+        "fieldIssues": [],
+        "profiles": {
+          "Article": [
+            "headline",
+            "datePublished",
+            "author"
+          ],
+          "NewsArticle": [
+            "headline",
+            "datePublished",
+            "author"
+          ],
+          "BlogPosting": [
+            "headline",
+            "datePublished",
+            "author"
+          ],
+          "FAQPage": [
+            "mainEntity"
+          ],
+          "HowTo": [
+            "name",
+            "step"
+          ],
+          "Organization": [
+            "name"
+          ],
+          "Corporation": [
+            "name"
+          ],
+          "LocalBusiness": [
+            "name"
+          ],
+          "Person": [
+            "name"
+          ],
+          "Product": [
+            "name"
+          ],
+          "WebSite": [
+            "name",
+            "url"
+          ],
+          "WebPage": [
+            "name"
+          ],
+          "AboutPage": [
+            "name"
+          ],
+          "ContactPage": [
+            "name"
+          ],
+          "ProfilePage": [
+            "name"
+          ],
+          "BreadcrumbList": [
+            "itemListElement"
+          ]
+        }
+      }
+    },
+    {
+      "id": "C07",
+      "title": "Author and dates match the page",
+      "status": "pass",
+      "weight": 1,
+      "earned": 1,
+      "scored": true,
+      "why": "Visible author “José García” matches JSON-LD. datePublished 2026-01-15 and dateModified 2026-02-02 match the schema calendar days.",
+      "fix": "<p>By <span itemprop=\"author\">Ada Lovelace</span></p>\n<p>Published <time itemprop=\"datePublished\" datetime=\"2026-10-27\">October 27, 2026</time></p>\n<p>Updated <time itemprop=\"dateModified\" datetime=\"2026-10-27\">October 27, 2026</time></p>\n\n<script type=\"application/ld+json\">\n{\n  \"@context\": \"https://schema.org\",\n  \"@type\": \"Article\",\n  \"headline\": \"Your headline\",\n  \"datePublished\": \"2026-10-27\",\n  \"dateModified\": \"2026-10-27\",\n  \"author\": { \"@type\": \"Person\", \"name\": \"Ada Lovelace\" }\n}\n</script>\n",
+      "sources": [
+        {
+          "title": "Google: Article structured data",
+          "url": "https://developers.google.com/search/docs/appearance/structured-data/article",
+          "confidence": "official"
+        },
+        {
+          "title": "Schema.org: Article",
+          "url": "https://schema.org/Article",
+          "confidence": "official"
+        }
+      ],
+      "details": {
+        "schema": {
+          "authors": [
+            "José García"
+          ],
+          "datePublished": "2026-01-15",
+          "dateModified": "2026-02-02"
+        },
+        "visible": {
+          "authors": [
+            "José García"
+          ],
+          "datePublished": "2026-01-15",
+          "dateModified": "2026-02-02"
+        },
+        "missingAuthors": []
+      }
+    },
+    {
+      "id": "C08",
+      "title": "Extractable answer hints",
+      "status": "pass",
+      "weight": 0.25,
+      "earned": 0.25,
+      "scored": true,
+      "why": "Found 3 of 3 extractable-answer signals: a definition-style opening paragraph, a question heading (What is a widget?), a list or table. This check has a low weight (0.25 of 8.25). FAQPage JSON-LD does not add points. No FAQPage block was used. Google’s AI optimization guide says you do not need special markup, and you do not need to rewrite a page just for generative AI. These signals are hints for text extractors, not a citation score.",
+      "fix": "<p>A widget is a reusable page element that ships its text in the HTML.</p>\n<h2>What is a widget?</h2>\n<ul>\n  <li>One fact per item</li>\n  <li>Another fact</li>\n</ul>\n",
+      "sources": [
+        {
+          "title": "Google: AI optimization guide",
+          "url": "https://developers.google.com/search/docs/fundamentals/ai-optimization-guide",
+          "confidence": "official"
+        },
+        {
+          "title": "Schema.org: FAQPage",
+          "url": "https://schema.org/FAQPage",
+          "confidence": "official"
+        },
+        {
+          "title": "Google: helpful, reliable, people-first content",
+          "url": "https://developers.google.com/search/docs/fundamentals/creating-helpful-content",
+          "confidence": "official"
+        }
+      ],
+      "details": {
+        "signals": 3,
+        "definition": true,
+        "questionHeadings": [
+          "What is a widget?"
+        ],
+        "listOrTable": true,
+        "faqSchemaPresent": false,
+        "faqSchemaAddsPoints": false,
+        "weight": 0.25
+      }
+    },
+    {
+      "id": "C09",
+      "title": "Links to authoritative sources",
+      "status": "pass",
+      "weight": 1,
+      "earned": 1,
+      "scored": true,
+      "why": "Found 1 authoritative outbound link, including https://developer.mozilla.org/en-US/docs/Web/HTML. A link counts when it is http(s), its registrable site differs from this page, and its host is on the v1 authority list (for example wikipedia.org, developer.mozilla.org, developers.google.com, schema.org, w3.org) or ends in a government or education suffix such as .gov, .edu, .gov.uk, or .ac.uk. Same-site links do not count. nofollow links still count because the URL is in the HTML.",
+      "fix": "<a href=\"https://developer.mozilla.org/en-US/docs/Web/HTML\">HTML on MDN</a>\n",
+      "sources": [
+        {
+          "title": "Google: helpful, reliable, people-first content",
+          "url": "https://developers.google.com/search/docs/fundamentals/creating-helpful-content",
+          "confidence": "official"
+        },
+        {
+          "title": "v1 authority host list and one-link threshold",
+          "url": "https://developers.google.com/search/docs/fundamentals/creating-helpful-content",
+          "confidence": "heuristic"
+        }
+      ],
+      "details": {
+        "matches": [
+          "https://developer.mozilla.org/en-US/docs/Web/HTML"
+        ],
+        "hosts": [
+          "wikipedia.org",
+          "schema.org",
+          "w3.org",
+          "ietf.org",
+          "rfc-editor.org",
+          "developer.mozilla.org",
+          "developers.google.com",
+          "web.dev",
+          "who.int",
+          "nih.gov",
+          "ncbi.nlm.nih.gov",
+          "cdc.gov",
+          "nature.com",
+          "science.org",
+          "ieee.org",
+          "iso.org",
+          "un.org",
+          "europa.eu",
+          "data.gov",
+          "nasa.gov"
+        ],
+        "suffixes": [
+          ".gov",
+          ".mil",
+          ".edu",
+          ".gov.uk",
+          ".gov.au",
+          ".gc.ca",
+          ".ac.uk",
+          ".edu.au"
+        ]
+      }
+    },
+    {
+      "id": "C10",
+      "title": "llms.txt",
+      "status": "pass",
+      "weight": 0,
+      "earned": 0,
+      "scored": false,
+      "why": "llms.txt is present and starts with a Markdown H1. It is shown here and it is not scored. Google’s AI optimization guide says you do not need an llms.txt file (or other special AI markup) for Google Search, including its generative AI features, and that Google Search ignores it. Keeping a file for some other consumer neither helps nor hurts Google Search. This check never changes the score.",
+      "fix": "# Site name\n\n> One-sentence summary of the site.\n\n## Docs\n\n- [Guide](https://example.com/guide): What this page covers\n",
+      "sources": [
+        {
+          "title": "Google: AI optimization guide",
+          "url": "https://developers.google.com/search/docs/fundamentals/ai-optimization-guide",
+          "confidence": "official"
+        },
+        {
+          "title": "Ahrefs: llms.txt study",
+          "url": "https://ahrefs.com/blog/llmstxt-study/",
+          "confidence": "research"
+        },
+        {
+          "title": "llms.txt proposal",
+          "url": "https://llmstxt.org/",
+          "confidence": "heuristic"
+        }
+      ],
+      "details": {
+        "present": true,
+        "scored": false,
+        "formatOk": true,
+        "llmsStatus": 200,
+        "preview": "# Example docs\n\n> Widget handbook for the GEO checker fixture.\n\n## Pages\n\n- [Widget handbook](https://example.com/widget): What a widget is"
+      }
+    }
+  ]
+}

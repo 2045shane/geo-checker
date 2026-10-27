@@ -1,0 +1,2 @@
+<!DOCTYPE html>
+<html><title>Not llms.txt</title><body>This is HTML.</body></html>

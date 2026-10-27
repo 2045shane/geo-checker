@@ -1,0 +1,25 @@
+{
+  "id": "c06-invalid-and-article",
+  "pageUrl": "https://example.com/widget",
+  "xRobotsTag": null,
+  "expect": {
+    "C01": "pass",
+    "C02": "pass",
+    "C03": "pass",
+    "C04": "pass",
+    "C05": "pass",
+    "C06": "fail",
+    "C07": "pass",
+    "C08": "pass",
+    "C09": "pass",
+    "C10": "pass"
+  },
+  "whyIncludes": {
+    "C06": [
+      "parse error",
+      "José 的文章：生成式优化",
+      "no required Article properties"
+    ]
+  },
+  "comment": "GEO checker fixture page. Not a product landing page."
+}

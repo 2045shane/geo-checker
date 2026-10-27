@@ -1,0 +1,25 @@
+{
+  "id": "c08-faq-schema-ignored",
+  "pageUrl": "https://example.com/widget",
+  "xRobotsTag": null,
+  "expect": {
+    "C01": "pass",
+    "C02": "pass",
+    "C03": "pass",
+    "C04": "pass",
+    "C05": "pass",
+    "C06": "pass",
+    "C07": "pass",
+    "C08": "fail",
+    "C09": "pass",
+    "C10": "pass"
+  },
+  "whyIncludes": {
+    "C08": [
+      "low weight (0.25 of 8.25)",
+      "FAQPage JSON-LD does not add points",
+      "ignored"
+    ]
+  },
+  "comment": "GEO checker fixture page. Not a product landing page."
+}

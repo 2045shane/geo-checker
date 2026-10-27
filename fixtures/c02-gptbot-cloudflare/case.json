@@ -1,0 +1,27 @@
+{
+  "id": "c02-gptbot-cloudflare",
+  "pageUrl": "https://example.com/widget",
+  "xRobotsTag": null,
+  "expect": {
+    "C01": "pass",
+    "C02": "fail",
+    "C03": "pass",
+    "C04": "pass",
+    "C05": "pass",
+    "C06": "pass",
+    "C07": "pass",
+    "C08": "pass",
+    "C09": "pass",
+    "C10": "pass"
+  },
+  "whyIncludes": {
+    "C02": [
+      "GPTBot",
+      "Cloudflare",
+      "OAI-SearchBot",
+      "Training crawlers",
+      "Search crawlers"
+    ]
+  },
+  "comment": "GEO checker fixture page. Not a product landing page."
+}

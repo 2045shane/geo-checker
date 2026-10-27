@@ -1,0 +1,25 @@
+{
+  "id": "c03-robots-directives",
+  "pageUrl": "https://example.com/widget",
+  "xRobotsTag": "googlebot: noindex, nosnippet, max-snippet:0",
+  "expect": {
+    "C01": "pass",
+    "C02": "pass",
+    "C03": "fail",
+    "C04": "pass",
+    "C05": "pass",
+    "C06": "pass",
+    "C07": "pass",
+    "C08": "pass",
+    "C09": "pass",
+    "C10": "pass"
+  },
+  "whyIncludes": {
+    "C03": [
+      "noindex",
+      "nosnippet",
+      "max-snippet:0"
+    ]
+  },
+  "comment": "GEO checker fixture page. Not a product landing page."
+}

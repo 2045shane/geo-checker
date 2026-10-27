@@ -1,0 +1,236 @@
+[
+  {
+    "id": "c01-js-only",
+    "score": 88,
+    "earnedWeight": 7.25,
+    "maxWeight": 8.25,
+    "status": {
+      "C01": "fail",
+      "C02": "pass",
+      "C03": "pass",
+      "C04": "pass",
+      "C05": "pass",
+      "C06": "pass",
+      "C07": "pass",
+      "C08": "pass",
+      "C09": "pass",
+      "C10": "pass"
+    }
+  },
+  {
+    "id": "c02-gptbot-cloudflare",
+    "score": 88,
+    "earnedWeight": 7.25,
+    "maxWeight": 8.25,
+    "status": {
+      "C01": "pass",
+      "C02": "fail",
+      "C03": "pass",
+      "C04": "pass",
+      "C05": "pass",
+      "C06": "pass",
+      "C07": "pass",
+      "C08": "pass",
+      "C09": "pass",
+      "C10": "pass"
+    }
+  },
+  {
+    "id": "c03-robots-directives",
+    "score": 88,
+    "earnedWeight": 7.25,
+    "maxWeight": 8.25,
+    "status": {
+      "C01": "pass",
+      "C02": "pass",
+      "C03": "fail",
+      "C04": "pass",
+      "C05": "pass",
+      "C06": "pass",
+      "C07": "pass",
+      "C08": "pass",
+      "C09": "pass",
+      "C10": "pass"
+    }
+  },
+  {
+    "id": "c04-missing-metadata",
+    "score": 88,
+    "earnedWeight": 7.25,
+    "maxWeight": 8.25,
+    "status": {
+      "C01": "pass",
+      "C02": "pass",
+      "C03": "pass",
+      "C04": "fail",
+      "C05": "pass",
+      "C06": "pass",
+      "C07": "pass",
+      "C08": "pass",
+      "C09": "pass",
+      "C10": "pass"
+    }
+  },
+  {
+    "id": "c05-skipped-heading",
+    "score": 88,
+    "earnedWeight": 7.25,
+    "maxWeight": 8.25,
+    "status": {
+      "C01": "pass",
+      "C02": "pass",
+      "C03": "pass",
+      "C04": "pass",
+      "C05": "fail",
+      "C06": "pass",
+      "C07": "pass",
+      "C08": "pass",
+      "C09": "pass",
+      "C10": "pass"
+    }
+  },
+  {
+    "id": "c06-invalid-and-article",
+    "score": 88,
+    "earnedWeight": 7.25,
+    "maxWeight": 8.25,
+    "status": {
+      "C01": "pass",
+      "C02": "pass",
+      "C03": "pass",
+      "C04": "pass",
+      "C05": "pass",
+      "C06": "fail",
+      "C07": "pass",
+      "C08": "pass",
+      "C09": "pass",
+      "C10": "pass"
+    }
+  },
+  {
+    "id": "c06-mojibake",
+    "score": 88,
+    "earnedWeight": 7.25,
+    "maxWeight": 8.25,
+    "status": {
+      "C01": "pass",
+      "C02": "pass",
+      "C03": "pass",
+      "C04": "pass",
+      "C05": "pass",
+      "C06": "fail",
+      "C07": "pass",
+      "C08": "pass",
+      "C09": "pass",
+      "C10": "pass"
+    }
+  },
+  {
+    "id": "c07-author-date-mismatch",
+    "score": 88,
+    "earnedWeight": 7.25,
+    "maxWeight": 8.25,
+    "status": {
+      "C01": "pass",
+      "C02": "pass",
+      "C03": "pass",
+      "C04": "pass",
+      "C05": "pass",
+      "C06": "pass",
+      "C07": "fail",
+      "C08": "pass",
+      "C09": "pass",
+      "C10": "pass"
+    }
+  },
+  {
+    "id": "c08-faq-schema-ignored",
+    "score": 97,
+    "earnedWeight": 8,
+    "maxWeight": 8.25,
+    "status": {
+      "C01": "pass",
+      "C02": "pass",
+      "C03": "pass",
+      "C04": "pass",
+      "C05": "pass",
+      "C06": "pass",
+      "C07": "pass",
+      "C08": "fail",
+      "C09": "pass",
+      "C10": "pass"
+    }
+  },
+  {
+    "id": "c09-no-authority-link",
+    "score": 88,
+    "earnedWeight": 7.25,
+    "maxWeight": 8.25,
+    "status": {
+      "C01": "pass",
+      "C02": "pass",
+      "C03": "pass",
+      "C04": "pass",
+      "C05": "pass",
+      "C06": "pass",
+      "C07": "pass",
+      "C08": "pass",
+      "C09": "fail",
+      "C10": "pass"
+    }
+  },
+  {
+    "id": "c10-absent",
+    "score": 100,
+    "earnedWeight": 8.25,
+    "maxWeight": 8.25,
+    "status": {
+      "C01": "pass",
+      "C02": "pass",
+      "C03": "pass",
+      "C04": "pass",
+      "C05": "pass",
+      "C06": "pass",
+      "C07": "pass",
+      "C08": "pass",
+      "C09": "pass",
+      "C10": "pass"
+    }
+  },
+  {
+    "id": "c10-invalid",
+    "score": 100,
+    "earnedWeight": 8.25,
+    "maxWeight": 8.25,
+    "status": {
+      "C01": "pass",
+      "C02": "pass",
+      "C03": "pass",
+      "C04": "pass",
+      "C05": "pass",
+      "C06": "pass",
+      "C07": "pass",
+      "C08": "pass",
+      "C09": "pass",
+      "C10": "fail"
+    }
+  },
+  {
+    "id": "healthy",
+    "score": 100,
+    "earnedWeight": 8.25,
+    "maxWeight": 8.25,
+    "status": {
+      "C01": "pass",
+      "C02": "pass",
+      "C03": "pass",
+      "C04": "pass",
+      "C05": "pass",
+      "C06": "pass",
+      "C07": "pass",
+      "C08": "pass",
+      "C09": "pass",
+      "C10": "pass"
+    }
+  }
+]

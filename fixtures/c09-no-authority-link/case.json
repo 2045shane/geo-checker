@@ -1,0 +1,24 @@
+{
+  "id": "c09-no-authority-link",
+  "pageUrl": "https://example.com/widget",
+  "xRobotsTag": null,
+  "expect": {
+    "C01": "pass",
+    "C02": "pass",
+    "C03": "pass",
+    "C04": "pass",
+    "C05": "pass",
+    "C06": "pass",
+    "C07": "pass",
+    "C08": "pass",
+    "C09": "fail",
+    "C10": "pass"
+  },
+  "whyIncludes": {
+    "C09": [
+      "authoritative",
+      "wikipedia.org"
+    ]
+  },
+  "comment": "GEO checker fixture page. Not a product landing page."
+}

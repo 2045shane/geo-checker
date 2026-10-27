@@ -1,0 +1,26 @@
+{
+  "id": "c07-author-date-mismatch",
+  "pageUrl": "https://example.com/widget",
+  "xRobotsTag": null,
+  "expect": {
+    "C01": "pass",
+    "C02": "pass",
+    "C03": "pass",
+    "C04": "pass",
+    "C05": "pass",
+    "C06": "pass",
+    "C07": "fail",
+    "C08": "pass",
+    "C09": "pass",
+    "C10": "pass"
+  },
+  "whyIncludes": {
+    "C07": [
+      "José García",
+      "John Smith",
+      "2026-01-15",
+      "2024-05-05"
+    ]
+  },
+  "comment": "GEO checker fixture page. Not a product landing page."
+}
