@@ -10,6 +10,7 @@ import { run as c09 } from "./checks/c09.js";
 import { run as c10 } from "./checks/c10.js";
 import { POSITIONING } from "./positioning.js";
 import { CHECKS, WEIGHTS, scoreFromChecks } from "./score.js";
+import { buildCitationSignals } from "./signals.js";
 
 const RUNNERS = [c01, c02, c03, c04, c05, c06, c07, c08, c09, c10];
 const CONFIDENCE = new Set(["official", "research", "heuristic"]);
@@ -57,6 +58,7 @@ export function checkPage(document, extras = {}) {
     checkedAt: ctx.now,
     ...scoreFromChecks(checks),
     checks,
+    citationSignals: buildCitationSignals(checks),
   };
 }
 

@@ -2,8 +2,9 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import test from "node:test";
+import { readdirSync } from "node:fs";
 import { collectPageEvidence } from "../src/collect-page.js";
-import { POSITIONING } from "../src/positioning.js";
+import { CITATION_DISCLAIMER, POSITIONING } from "../src/positioning.js";
 
 const root = path.resolve(import.meta.dirname, "..");
 
@@ -42,8 +43,28 @@ test("product copy has no account or pricing pitch", () => {
   }
   const html = readFileSync(path.join(root, "popup.html"), "utf8");
   assert.ok(html.includes(POSITIONING));
+  assert.ok(html.includes(CITATION_DISCLAIMER));
   const readme = readFileSync(path.join(root, "README.md"), "utf8");
   assert.ok(readme.includes(POSITIONING));
+  assert.ok(readme.includes(CITATION_DISCLAIMER));
+  const featureMap = readFileSync(path.join(root, "FEATURE_MAP.md"), "utf8");
+  assert.ok(featureMap.includes(CITATION_DISCLAIMER));
+  assert.match(featureMap, /GEO-CHECKER-V2-CUT-2026-11-10-v1/);
+  assert.match(featureMap, /GEO-CUT-2026-10-27-v1-popup/);
+  assert.match(featureMap, /GEO-EXTENSION-CUT-2026-10-29-v1/);
+  assert.match(readme, /GEO-CHECKER-V2-CUT-2026-11-10-v1/);
+});
+
+test("product copy does not claim a live AI citation", () => {
+  const files = ["popup.html", "popup.js", "popup.css", "README.md", "FEATURE_MAP.md", "manifest.json"];
+  for (const name of readdirSync(path.join(root, "src"), { recursive: true })) {
+    if (String(name).endsWith(".js")) files.push(path.join("src", name));
+  }
+  const banned = [/cited by chatgpt/i, /cited by claude/i, /cited by perplexity/i, /已被\s*ChatGPT\s*引用/, /已被引用/];
+  for (const file of files) {
+    const text = readFileSync(path.join(root, file), "utf8");
+    for (const pattern of banned) assert.equal(pattern.test(text), false, `${file} ${pattern}`);
+  }
 });
 
 test("the injected collector is self-contained", () => {

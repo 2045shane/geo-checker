@@ -14,6 +14,8 @@ export function buildMarkdown(result) {
     "",
   ];
 
+  if (result.citationSignals) lines.push(...signalLines(result.citationSignals));
+
   for (const check of result.checks) {
     lines.push(`## ${check.id} ${check.title} — ${check.status === "pass" ? "Pass" : "Fail"}`);
     lines.push("");
@@ -54,4 +56,32 @@ export function buildMarkdown(result) {
   lines.push(`- Heuristic: ${counts.heuristic}`);
   lines.push("");
   return lines.join("\n");
+}
+
+function signalLines(signals) {
+  const lines = [`## ${signals.title}`, "", signals.disclaimer, "", signals.note, ""];
+  for (const item of signals.items) {
+    lines.push(`- ${item.label}: ${itemStatusText(item)} (${item.sources.join(", ")})`);
+    if (item.detail) lines.push(`  - ${item.detail}`);
+    for (const bot of item.bots || []) lines.push(`  - ${bot.token}: ${botAllowedLabel(bot.allowed)}`);
+    for (const part of item.parts || []) {
+      lines.push(`  - ${part.label} (${part.id}): ${part.status === "pass" ? "Pass" : "Fail"}`);
+    }
+  }
+  lines.push("");
+  return lines;
+}
+
+function itemStatusText(item) {
+  if (item.status === "unscored") {
+    const check = item.checkStatus === "pass" ? "Pass" : "Fail";
+    return `${check}; Not scored`;
+  }
+  return item.status === "pass" ? "Pass" : "Fail";
+}
+
+function botAllowedLabel(allowed) {
+  if (allowed === true) return "Allowed";
+  if (allowed === false) return "Disallowed";
+  return "Not read";
 }
