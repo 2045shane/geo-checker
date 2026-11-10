@@ -4,7 +4,10 @@ import path from "node:path";
 import test from "node:test";
 import { parseHTML } from "linkedom";
 import { checkPage } from "../src/checker.js";
+import { INDEX_DISCLAIMER } from "../src/positioning.js";
 import { buildMarkdown } from "../src/report.js";
+import { isAllowed, parseRobots, urlPath } from "../src/robots.js";
+import { CITATION_BOTS, SIGNAL_IDS } from "../src/signals.js";
 import { fixtureIds, root, runFixture } from "../scripts/load-fixture.mjs";
 
 const outputDir = path.join(root, "testdata", "fixture-output");
@@ -104,5 +107,93 @@ test("markdown report includes positioning, every check, and a source summary", 
   for (const check of result.checks) assert.match(markdown, new RegExp(`## ${check.id} `));
   assert.match(markdown, /## Source summary/);
   assert.match(markdown, /Not scored \(weight 0\)/);
+  assert.match(markdown, /## AI search citation signals/);
+  assert.ok(markdown.includes(INDEX_DISCLAIMER));
   writeFileSync(path.join(root, "testdata", "sample-report.md"), markdown);
+});
+
+test("citation-signal summary reuses checks and lists the four AI crawlers", () => {
+  const healthy = runFixture("healthy").result;
+  const signals = healthy.citationSignals;
+  assert.deepEqual(signals.items.map((item) => item.id), [...SIGNAL_IDS]);
+  assert.equal(signals.items.find((item) => item.id === "structured-data").status, "pass");
+  assert.equal(signals.items.find((item) => item.id === "basic-meta").status, "pass");
+  assert.equal(signals.items.find((item) => item.id === "headings-qa").status, "pass");
+  const llms = signals.items.find((item) => item.id === "llms-txt");
+  assert.equal(llms.status, "unscored");
+  assert.equal(llms.checkStatus, "pass");
+  assert.equal(llms.present, true);
+  assert.match(llms.detail, /\/llms\.txt is present/);
+  assert.deepEqual(
+    Object.fromEntries(signals.items.find((item) => item.id === "robots-ai").bots.map((bot) => [bot.token, bot.allowed])),
+    { GPTBot: true, ClaudeBot: true, PerplexityBot: true, "Google-Extended": true },
+  );
+  assert.equal(healthy.score, 100);
+  assert.equal(healthy.maxWeight, 8.25);
+
+  const blocked = runFixture("c02-gptbot-cloudflare").result;
+  assert.deepEqual(
+    Object.fromEntries(blocked.citationSignals.items.find((item) => item.id === "robots-ai").bots.map((bot) => [bot.token, bot.allowed])),
+    { GPTBot: false, ClaudeBot: false, PerplexityBot: true, "Google-Extended": false },
+  );
+  assert.equal(blocked.citationSignals.items.find((item) => item.id === "robots-ai").status, "fail");
+
+  const absent = runFixture("c10-absent").result;
+  const absentLlms = absent.citationSignals.items.find((item) => item.id === "llms-txt");
+  assert.equal(absentLlms.present, false);
+  assert.equal(absentLlms.status, "unscored");
+  assert.equal(absentLlms.checkStatus, "pass");
+  assert.match(absentLlms.detail, /\/llms\.txt is absent/);
+  assert.equal(absent.score, 100);
+
+  const invalid = runFixture("c10-invalid").result;
+  const invalidLlms = invalid.citationSignals.items.find((item) => item.id === "llms-txt");
+  assert.equal(invalidLlms.present, true);
+  assert.equal(invalidLlms.checkStatus, "fail");
+  assert.equal(invalidLlms.status, "unscored");
+  assert.match(invalidLlms.detail, /format check failed/);
+  assert.equal(invalid.score, 100);
+
+  const missingMeta = runFixture("c04-missing-metadata").result;
+  assert.equal(missingMeta.citationSignals.items.find((item) => item.id === "basic-meta").status, "fail");
+  const skipped = runFixture("c05-skipped-heading").result;
+  assert.equal(skipped.citationSignals.items.find((item) => item.id === "headings-qa").status, "fail");
+  assert.equal(skipped.citationSignals.items.find((item) => item.id === "headings-qa").parts.find((part) => part.id === "C05").status, "fail");
+  const low = runFixture("c08-faq-schema-ignored").result;
+  const headings = low.citationSignals.items.find((item) => item.id === "headings-qa");
+  assert.equal(headings.parts.find((part) => part.id === "C05").status, "pass");
+  assert.equal(headings.parts.find((part) => part.id === "C08").status, "fail");
+  assert.equal(headings.status, "fail");
+  assert.equal(low.score, 97);
+  const schema = runFixture("c06-invalid-and-article").result;
+  assert.equal(schema.citationSignals.items.find((item) => item.id === "structured-data").status, "fail");
+
+  for (const id of fixtureIds()) {
+    const { meta, result } = runFixture(id);
+    const byId = Object.fromEntries(result.checks.map((check) => [check.id, check]));
+    const items = Object.fromEntries(result.citationSignals.items.map((item) => [item.id, item]));
+    assert.equal(items["structured-data"].status, byId.C06.status, id);
+    assert.equal(items["basic-meta"].status, byId.C04.status, id);
+    assert.equal(items["robots-ai"].status, byId.C02.status, id);
+    assert.equal(items["llms-txt"].status, "unscored", id);
+    assert.equal(items["llms-txt"].checkStatus, byId.C10.status, id);
+    assert.equal(items["llms-txt"].present, byId.C10.details.present, id);
+    assert.equal(items["headings-qa"].parts.find((part) => part.id === "C05").status, byId.C05.status, id);
+    assert.equal(items["headings-qa"].parts.find((part) => part.id === "C08").status, byId.C08.status, id);
+    assert.deepEqual(items["robots-ai"].bots.map((bot) => bot.token), [...CITATION_BOTS], id);
+    const robotsPath = path.join(root, "fixtures", id, "robots.txt");
+    const robotsTxt = readFileSync(robotsPath, "utf8");
+    const groups = parseRobots(robotsTxt);
+    const pagePath = urlPath(meta.pageUrl);
+    const c02rows = [...byId.C02.details.training, ...byId.C02.details.search];
+    for (const bot of items["robots-ai"].bots) {
+      assert.equal(bot.allowed, isAllowed(groups, bot.token, pagePath), `${id} ${bot.token}`);
+      assert.equal(bot.allowed, c02rows.find((row) => row.token === bot.token).allowed, `${id} ${bot.token}`);
+    }
+    const markdown = buildMarkdown(result);
+    assert.match(markdown, /## AI search citation signals/);
+    assert.ok(markdown.includes(INDEX_DISCLAIMER), id);
+    for (const token of CITATION_BOTS) assert.ok(markdown.includes(token), `${id} ${token}`);
+    assert.equal(/cited by/i.test(markdown), false, id);
+  }
 });

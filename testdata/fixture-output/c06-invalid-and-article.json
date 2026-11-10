@@ -584,5 +584,90 @@
         "preview": "# Example docs\n\n> Widget handbook for the GEO checker fixture.\n\n## Pages\n\n- [Widget handbook](https://example.com/widget): What a widget is"
       }
     }
-  ]
+  ],
+  "citationSignals": {
+    "title": "AI search citation signals",
+    "disclaimer": "Based on public signals. 基于公开信号，非实时索引证明。",
+    "note": "Reuses the checks below. Not a second score.",
+    "items": [
+      {
+        "id": "structured-data",
+        "label": "Structured data (JSON-LD / schema)",
+        "status": "fail",
+        "sources": [
+          "C06"
+        ],
+        "detail": "Same result as C06 (fail)."
+      },
+      {
+        "id": "robots-ai",
+        "label": "robots.txt for AI crawlers",
+        "status": "pass",
+        "sources": [
+          "C02"
+        ],
+        "detail": "Same result as C02 for every tracked token. The four lines are that check’s allow or disallow for these tokens.",
+        "bots": [
+          {
+            "token": "GPTBot",
+            "allowed": true
+          },
+          {
+            "token": "ClaudeBot",
+            "allowed": true
+          },
+          {
+            "token": "PerplexityBot",
+            "allowed": true
+          },
+          {
+            "token": "Google-Extended",
+            "allowed": true
+          }
+        ]
+      },
+      {
+        "id": "llms-txt",
+        "label": "llms.txt",
+        "status": "unscored",
+        "checkStatus": "pass",
+        "present": true,
+        "sources": [
+          "C10"
+        ],
+        "detail": "C10 pass. /llms.txt is present. Not scored."
+      },
+      {
+        "id": "headings-qa",
+        "label": "Headings and Q&A structure",
+        "status": "pass",
+        "sources": [
+          "C05",
+          "C08"
+        ],
+        "detail": "Same results as C05 (headings) and C08 (Q&A hints). The row fails if either check fails. This summary adds no score.",
+        "parts": [
+          {
+            "id": "C05",
+            "label": "Headings",
+            "status": "pass"
+          },
+          {
+            "id": "C08",
+            "label": "Q&A hints",
+            "status": "pass"
+          }
+        ]
+      },
+      {
+        "id": "basic-meta",
+        "label": "Basic meta",
+        "status": "pass",
+        "sources": [
+          "C04"
+        ],
+        "detail": "Same result as C04 (pass): title, description, canonical, and lang."
+      }
+    ]
+  }
 }

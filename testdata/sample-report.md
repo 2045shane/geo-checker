@@ -12,6 +12,29 @@ Can AI crawlers actually read this page? An evidence-based GEO checker. No accou
 - C10 has weight 0 and never changes the score.
 - FAQPage JSON-LD does not add points.
 
+## AI search citation signals
+
+Based on public signals. 基于公开信号，非实时索引证明。
+
+Reuses the checks below. Not a second score.
+
+- Structured data (JSON-LD / schema): Pass (C06)
+  - Same result as C06 (pass).
+- robots.txt for AI crawlers: Pass (C02)
+  - Same result as C02 for every tracked token. The four lines are that check’s allow or disallow for these tokens.
+  - GPTBot: Allowed
+  - ClaudeBot: Allowed
+  - PerplexityBot: Allowed
+  - Google-Extended: Allowed
+- llms.txt: Pass; Not scored (C10)
+  - C10 pass. /llms.txt is present. Not scored.
+- Headings and Q&A structure: Pass (C05, C08)
+  - Same results as C05 (headings) and C08 (Q&A hints). The row fails if either check fails. This summary adds no score.
+  - Headings (C05): Pass
+  - Q&A hints (C08): Pass
+- Basic meta: Pass (C04)
+  - Same result as C04 (pass): title, description, canonical, and lang.
+
 ## C01 Raw HTML vs rendered page — Pass
 
 Weight: 1. Earned: 1.

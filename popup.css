@@ -44,6 +44,12 @@ html, body {
   font-size: 13px;
 }
 
+.disclaimer {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
 #app { padding: 12px 14px 16px; }
 
 .pending { margin: 8px 0; color: var(--muted); }
@@ -79,6 +85,68 @@ html, body {
 .score-rule {
   margin: 0 0 10px;
   color: var(--muted);
+  font-size: 12px;
+}
+
+.signals {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+}
+
+.signals-title {
+  margin: 0;
+  font-size: 14px;
+}
+
+.signals-note {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.signal-list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+}
+
+.signal {
+  padding: 8px 0 0;
+  margin-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+.signal-row, .signal-badges, .signal-bots li, .signal-parts li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.signal-label {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.signal-detail {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.signal-bots, .signal-parts {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+
+.signal-bots li, .signal-parts li {
   font-size: 12px;
 }
 

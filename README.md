@@ -24,8 +24,8 @@ Can AI crawlers actually read this page? An evidence-based GEO checker. No accou
 4. 点 **加载未打包的扩展程序**。英文界面叫 **Load unpacked**。
 5. 选中刚才克隆的文件夹，也就是直接放着 `manifest.json` 的那一层。不要选它的上一级，也不要选里面的子目录。
 6. 打开一个普通网页，地址以 `http://` 或 `https://` 开头。
-7. 点工具栏上的 GEO Checker 图标。弹出窗口会显示分数和全部十项检查。工具栏上看不到图标时，点扩展菜单（拼图图标），再点 GEO Checker。
-8. 某一项上点 **Copy fix**，复制这一项的修复文本。点 **Copy Markdown report**，复制整份 Markdown 报告。报告开头是定位句，结尾是来源汇总（Source summary）。
+7. 点工具栏上的 GEO Checker 图标。弹出窗口先显示 AI 搜索可引用信号汇总，再显示分数和全部十项检查。工具栏上看不到图标时，点扩展菜单（拼图图标），再点 GEO Checker。
+8. 某一项上点 **Copy fix**，复制这一项的修复文本。点 **Copy Markdown report**，复制整份 Markdown 报告。报告开头是定位句，接着是同一份汇总，结尾是来源汇总（Source summary）。
 
 只有 `http` 和 `https` 页面可以检查。`chrome://` 页面和 Chrome 网上应用店不能检查。
 
@@ -69,10 +69,12 @@ Can AI crawlers actually read this page? An evidence-based GEO checker. No accou
 
 弹出窗口从上到下是：
 
-1. **Score**。分数写成 `数字/100`。下一行是计分式 `score = round(100 * earnedWeight / maxWeight)`，以及拿到的权重和满分权重。满分权重是 **8.25**。通过的检查加上它的权重，失败的检查加 0。
-2. **Copy Markdown report**。复制整份报告，见下一节。
-3. 十条检查，顺序固定为 C01 到 C10。每一条有编号、英文标题、**Pass** 或 **Fail**，下面是说明、**Fix**、来源链接。
-4. 底部一句隐私说明，大意是：没有账号；点图标之后只读当前标签页，并只请求本站自己的地址、`/robots.txt` 和 `/llms.txt`；这些响应留在这个浏览器里。
+1. 页眉。英文定位句下面一行是 `Based on public signals. 基于公开信号，非实时索引证明。` 结果来自公开信号，不是实时索引证明。
+2. **AI search citation signals**。五类都复用已有检查，不另计分。结构化数据是 C06。robots.txt 这一行是 C02，并逐项列出 GPTBot、ClaudeBot、PerplexityBot、Google-Extended 的允许或禁止。llms.txt 是 C10：显示 Pass 或 Fail，并标 **Not scored**；有没有文件跟 C10 一致。标题与问答是 C05 和 C08，有一项失败则这一行 Fail。基础 meta 是 C04。
+3. **Score**。分数写成 `数字/100`。下一行是计分式 `score = round(100 * earnedWeight / maxWeight)`，以及拿到的权重和满分权重。满分权重是 **8.25**。通过的检查加上它的权重，失败的检查加 0。汇总不改变这个分数。
+4. **Copy Markdown report**。复制整份报告，见下一节。
+5. 十条检查，顺序固定为 C01 到 C10。每一条有编号、英文标题、**Pass** 或 **Fail**，下面是说明、**Fix**、来源链接。
+6. 底部一句隐私说明，大意是：没有账号；点图标之后只读当前标签页，并只请求本站自己的地址、`/robots.txt` 和 `/llms.txt`；这些响应留在这个浏览器里。
 
 两项特殊标记：
 
@@ -116,10 +118,11 @@ Can AI crawlers actually read this page? An evidence-based GEO checker. No accou
 1. 标题 `# GEO Checker report`。
 2. 定位句，和弹出窗口顶部那句英文相同：`Can AI crawlers actually read this page? An evidence-based GEO checker. No account, no upsell, nothing leaves your browser.`
 3. 页面 URL、检查时间、分数、拿到的权重 / 满分权重、计分式，以及四条计分说明：C01–C07 和 C09 权重各为 1；C08 权重 0.25；C10 权重 0 且不改变分数；`FAQPage` JSON-LD 不加分。
-4. C01 到 C10 各一节：英文标题、Pass 或 Fail、权重、Why、Fix 代码块、Sources（标题、`official` / `research` / `heuristic`、链接）。C10 有预览时，再附一段 llms.txt 预览。
-5. 最后一节 `## Source summary`，分别列出 Official、Research、Heuristic 各有几条。
+4. `## AI search citation signals`。和弹出窗口同一份汇总：五类信号、四个爬虫逐项、llms.txt 有无，以及 `Based on public signals. 基于公开信号，非实时索引证明。`
+5. C01 到 C10 各一节：英文标题、Pass 或 Fail、权重、Why、Fix 代码块、Sources（标题、`official` / `research` / `heuristic`、链接）。C10 有预览时，再附一段 llms.txt 预览。
+6. 最后一节 `## Source summary`，分别列出 Official、Research、Heuristic 各有几条。
 
-Cut id: `GEO-CUT-2026-10-27-v1-popup`. This repository is the Manifest V3 popup only. It is not a landing page, not a bookmarklet, and not a store listing.
+Cut id: `GEO-CUT-2026-10-27-v1-popup` (C01–C10, the score, and the Markdown report). v2 cut id: `GEO-CHECKER-V2-CUT-2026-11-10-v1` (the citation-signal summary on this same popup). The score formula and the weights are unchanged. `GEO-EXTENSION-CUT-2026-10-29-v1` is a different cut (another repository, a paywall, a daily limit) and is not in this repository. This repository is the Manifest V3 popup only. It is not a landing page, not a bookmarklet, and not a store listing.
 
 ## What it checks
 
@@ -137,6 +140,20 @@ Click the toolbar icon on an `http` or `https` page. The popup shows one score a
 | C08 | Definition sentence, question heading, list or table | 0.25 |
 | C09 | At least one authoritative outbound link | 1 |
 | C10 | `llms.txt` presence and a basic Markdown format check | 0 |
+
+## AI search citation signals
+
+v2 (`GEO-CHECKER-V2-CUT-2026-11-10-v1`) adds this block at the top of the popup and the same section in the Markdown report. It does not change the score formula, the weights, or C01–C10. See `FEATURE_MAP.md`.
+
+| Signal | Reuses | Shown as |
+| --- | --- | --- |
+| Structured data (JSON-LD / schema) | C06 | Pass or Fail |
+| robots.txt for AI crawlers | C02 | C02’s Pass or Fail, plus GPTBot, ClaudeBot, PerplexityBot, and Google-Extended as Allowed, Disallowed, or Not read |
+| llms.txt | C10 | Pass or Fail, and Not scored. Present or absent follows C10 |
+| Headings and Q&A structure | C05 and C08 | Pass only when both pass. The summary adds no score |
+| Basic meta | C04 | Pass or Fail for title, description, canonical, and lang |
+
+The popup header and the report include this line: Based on public signals. 基于公开信号，非实时索引证明。
 
 ## Score
 
@@ -196,7 +213,7 @@ The same steps in Chinese are in [安装](#zh-install) and [使用](#zh-use) abo
 4. Choose **Load unpacked**.
 5. Select this directory (the folder that contains `manifest.json`).
 6. Open a normal `http` or `https` page.
-7. Click the GEO Checker icon. The popup shows the score and all ten checks.
+7. Click the GEO Checker icon. The popup shows the citation-signal summary, then the score and all ten checks.
 8. Use **Copy fix** on a row, or **Copy Markdown report** for the full report. The report starts with the positioning sentence and ends with a source summary.
 
 Browser pages (`chrome://` and the Chrome Web Store) cannot be checked.
@@ -240,4 +257,4 @@ npm run self-test
 
 ## Out of scope for this cut
 
-Not in this repository: a marketing landing page, a bookmarklet, a Chrome or Edge store listing, accounts, payments, a backend, or calls to an AI API.
+Not in this repository: a marketing landing page, a bookmarklet, a Chrome or Edge store listing, accounts, payments, a backend, or calls to an AI API. Also not in this repository: the shelved extension cut (`GEO-EXTENSION-CUT-2026-10-29-v1`), a paywall, a daily check limit, or a toolbar score badge.

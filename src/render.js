@@ -3,6 +3,8 @@ import { buildMarkdown } from "./report.js";
 export function renderReport(root, result) {
   root.replaceChildren();
 
+  if (result.citationSignals) root.append(renderSignals(result.citationSignals));
+
   const score = document.createElement("section");
   score.className = "score";
   score.append(
@@ -30,6 +32,76 @@ export function renderReport(root, result) {
     "No account. After you click the icon, this extension reads the open tab and requests only this site’s own URL, /robots.txt, and /llms.txt. Those responses stay in this browser.",
   );
   root.append(privacy);
+}
+
+function renderSignals(signals) {
+  const section = document.createElement("section");
+  section.className = "signals";
+  section.id = "citation-signals";
+  section.append(el("h2", "signals-title", signals.title), el("p", "signals-note", signals.note));
+  const list = document.createElement("ul");
+  list.className = "signal-list";
+  for (const item of signals.items) list.append(renderSignal(item));
+  section.append(list);
+  return section;
+}
+
+function renderSignal(item) {
+  const li = document.createElement("li");
+  li.className = "signal";
+  li.dataset.signal = item.id;
+
+  const row = document.createElement("div");
+  row.className = "signal-row";
+  row.append(el("p", "signal-label", item.label), signalBadges(item));
+  li.append(row);
+  if (item.detail) li.append(el("p", "signal-detail", item.detail));
+
+  if (item.bots?.length) {
+    const bots = document.createElement("ul");
+    bots.className = "signal-bots";
+    for (const bot of item.bots) {
+      const botLi = document.createElement("li");
+      botLi.append(el("span", "bot-token", bot.token), botBadge(bot.allowed));
+      bots.append(botLi);
+    }
+    li.append(bots);
+  }
+
+  if (item.parts?.length) {
+    const parts = document.createElement("ul");
+    parts.className = "signal-parts";
+    for (const part of item.parts) {
+      const partLi = document.createElement("li");
+      partLi.append(
+        el("span", "part-label", `${part.label} (${part.id})`),
+        badge(part.status === "pass" ? "Pass" : "Fail", part.status),
+      );
+      parts.append(partLi);
+    }
+    li.append(parts);
+  }
+  return li;
+}
+
+function signalBadges(item) {
+  const wrap = document.createElement("div");
+  wrap.className = "signal-badges";
+  if (item.status === "unscored") {
+    wrap.append(
+      badge(item.checkStatus === "pass" ? "Pass" : "Fail", item.checkStatus === "pass" ? "pass" : "fail"),
+      badge("Not scored", "unscored"),
+    );
+    return wrap;
+  }
+  wrap.append(badge(item.status === "pass" ? "Pass" : "Fail", item.status));
+  return wrap;
+}
+
+function botBadge(allowed) {
+  if (allowed === true) return badge("Allowed", "pass");
+  if (allowed === false) return badge("Disallowed", "fail");
+  return badge("Not read", "unscored");
 }
 
 function renderCheck(check) {

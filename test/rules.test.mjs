@@ -61,6 +61,21 @@ test("weights sum to 8.25 and C10 cannot move the score", () => {
   assert.equal(malformed.checks.find((check) => check.id === "C10").weight, 0);
 });
 
+test("unreadable robots.txt keeps C02 failed and marks the four citation bots not read", () => {
+  const result = check(page(""), { robotsTxt: null, robotsStatus: 500, robotsError: "down" });
+  assert.equal(status(result, "C02"), "fail");
+  const robots = result.citationSignals.items.find((item) => item.id === "robots-ai");
+  assert.equal(robots.status, "fail");
+  assert.deepEqual(
+    robots.bots.map((bot) => bot.token),
+    ["GPTBot", "ClaudeBot", "PerplexityBot", "Google-Extended"],
+  );
+  assert.deepEqual(robots.bots.map((bot) => bot.allowed), [null, null, null, null]);
+  assert.equal(result.maxWeight, 8.25);
+  assert.equal(result.checks.find((check) => check.id === "C02").earned, 0);
+  assert.equal(result.checks.find((check) => check.id === "C10").weight, 0);
+});
+
 test("missing raw HTML fails C01 instead of pretending the DOM is the response", () => {
   const result = check(page(""), { rawDocument: null, rawError: "blocked" });
   assert.equal(status(result, "C01"), "fail");
